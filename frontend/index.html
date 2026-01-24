@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sistema de Facturación</title>
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+    <div class="container">
+        <!-- SIDEBAR -->
+        <nav class="sidebar">
+            <h2>Sistema Facturación</h2>
+            <div class="usuario-info">
+                <p><strong id="nombreUsuario"></strong></p>
+                <p><small id="rolUsuario"></small></p>
+                <button id="btnCerrarSesion" class="btn btn-danger btn-sm">Cerrar Sesión</button>
+            </div>
+            <ul>
+                <li><a href="#" data-section="ventas" class="active">Ventas</a></li>
+                <li><a href="#" data-section="productos">Productos</a></li>
+                <li><a href="#" data-section="inventario">Inventario</a></li>
+                <li><a href="#" data-section="proveedores">Proveedores</a></li>
+                <li><a href="#" data-section="gastos">Gastos</a></li>
+                <li><a href="#" data-section="lotes">Lotes</a></li>
+                <li><a href="#" data-section="reportes">Reportes</a></li>
+                <li id="menuUsuarios" style="display:none;"><a href="#" data-section="usuarios">Usuarios</a></li>
+            </ul>
+        </nav>
+
+        <!-- CONTENIDO PRINCIPAL -->
+        <main class="content">
+            <!-- SECCIÓN VENTAS -->
+            <section id="ventas" class="section active">
+                <h1>Punto de Venta</h1>
+                
+                <div class="caja-estado">
+                    <div id="estadoCaja"></div>
+                    <button id="btnAbrirCaja" class="btn btn-success">Abrir Caja</button>
+                    <button id="btnCerrarCaja" class="btn btn-danger" style="display:none;">Cerrar Caja</button>
+                </div>
+
+                <div class="venta-container">
+                    <div class="productos-busqueda">
+                        <input type="text" id="buscarProducto" placeholder="Buscar producto por código o nombre...">
+                        <div id="resultadosProductos"></div>
+                    </div>
+
+                    <div class="carrito">
+                        <h3>Carrito de Compra</h3>
+                        <table id="tablaCarrito">
+                            <thead>
+                                <tr>
+                                    <th>Producto</th>
+                                    <th>Precio</th>
+                                    <th>Cant.</th>
+                                    <th>Subtotal</th>
+                                    <th>Acción</th>
+                                </tr>
+                            </thead>
+                            <tbody></tbody>
+                        </table>
+
+                        <div class="totales">
+                            <p>Subtotal: Q<span id="subtotalVenta">0.00</span></p>
+                            <p>Descuento: Q<input type="number" id="descuentoVenta" value="0" step="0.01"></p>
+                            <p><strong>Total: Q<span id="totalVenta">0.00</span></strong></p>
+                        </div>
+
+                        <button id="btnProcesarVenta" class="btn btn-primary btn-large">Procesar Venta</button>
+                    </div>
+                </div>
+            </section>
+
+            <!-- SECCIÓN PRODUCTOS -->
+            <section id="productos" class="section">
+                <h1>Gestión de Productos</h1>
+                <button id="btnNuevoProducto" class="btn btn-primary">Nuevo Producto</button>
+                
+                <table id="tablaProductos" class="data-table">
+                    <thead>
+                        <tr>
+                            <th>Código</th>
+                            <th>Nombre</th>
+                            <th>Categoría</th>
+                            <th>Precio Compra</th>
+                            <th>Precio Venta</th>
+                            <th>Stock</th>
+                            <th>Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody></tbody>
+                </table>
+            </section>
+
+            <!-- SECCIÓN INVENTARIO -->
+            <section id="inventario" class="section">
+                <h1>Control de Inventario</h1>
+                
+                <div class="inventario-acciones">
+                    <button id="btnEntradaInventario" class="btn btn-success">Entrada</button>
+                    <button id="btnSalidaInventario" class="btn btn-warning">Salida</button>
+                    <button id="btnAjusteInventario" class="btn btn-info">Ajuste</button>
+                </div>
+
+                <h3>Productos con Stock Bajo</h3>
+                <table id="tablaBajoStock" class="data-table">
+                    <thead>
+                        <tr>
+                            <th>Código</th>
+                            <th>Nombre</th>
+                            <th>Stock Actual</th>
+                            <th>Stock Mínimo</th>
+                        </tr>
+                    </thead>
+                    <tbody></tbody>
+                </table>
+
+                <h3>Movimientos Recientes</h3>
+                <table id="tablaMovimientos" class="data-table">
+                    <thead>
+                        <tr>
+                            <th>Fecha</th>
+                            <th>Producto</th>
+                            <th>Tipo</th>
+                            <th>Cantidad</th>
+                            <th>Motivo</th>
+                        </tr>
+                    </thead>
+                    <tbody></tbody>
+                </table>
+            </section>
+
+            <!-- SECCIÓN PROVEEDORES -->
+            <section id="proveedores" class="section">
+                <h1>Gestión de Proveedores</h1>
+                <button id="btnNuevoProveedor" class="btn btn-primary">Nuevo Proveedor</button>
+                <button id="btnNuevaCompra" class="btn btn-success">Nueva Compra</button>
+                
+                <table id="tablaProveedores" class="data-table">
+                    <thead>
+                        <tr>
+                            <th>Nombre</th>
+                            <th>Contacto</th>
+                            <th>Teléfono</th>
+                            <th>NIT</th>
+                            <th>Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody></tbody>
+                </table>
+            </section>
+
+            <!-- SECCIÓN GASTOS -->
+            <section id="gastos" class="section">
+                <h1>Control de Gastos</h1>
+                <button id="btnNuevoGasto" class="btn btn-primary">Registrar Gasto</button>
+                
+                <table id="tablaGastos" class="data-table">
+                    <thead>
+                        <tr>
+                            <th>Fecha</th>
+                            <th>Descripción</th>
+                            <th>Categoría</th>
+                            <th>Monto</th>
+                        </tr>
+                    </thead>
+                    <tbody></tbody>
+                </table>
+            </section>
+
+            <!-- SECCIÓN LOTES -->
+            <section id="lotes" class="section">
+                <h1>Gestión de Lotes</h1>
+                
+                <h3>Lotes Próximos a Vencer</h3>
+                <table id="tablaLotesVencer" class="data-table">
+                    <thead>
+                        <tr>
+                            <th>Producto</th>
+                            <th>Número Lote</th>
+                            <th>Cantidad</th>
+                            <th>Fecha Vencimiento</th>
+                            <th>Días Restantes</th>
+                        </tr>
+                    </thead>
+                    <tbody></tbody>
+                </table>
+            </section>
+
+            <!-- SECCIÓN REPORTES -->
+            <section id="reportes" class="section">
+                <h1>Reportes</h1>
+                <div class="reportes-grid">
+                    <div class="reporte-card">
+                        <h3>Ventas del Día</h3>
+                        <p id="ventasDelDia">Q0.00</p>
+                    </div>
+                    <div class="reporte-card">
+                        <h3>Gastos del Día</h3>
+                        <p id="gastosDelDia">Q0.00</p>
+                    </div>
+                    <div class="reporte-card">
+                        <h3>Productos en Stock</h3>
+                        <p id="productosStock">0</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- SECCIÓN USUARIOS (Solo Admin) -->
+            <section id="usuarios" class="section">
+                <h1>Gestión de Usuarios</h1>
+                <button id="btnNuevoUsuario" class="btn btn-primary">Nuevo Usuario</button>
+                
+                <table id="tablaUsuarios" class="data-table">
+                    <thead>
+                        <tr>
+                            <th>Nombre</th>
+                            <th>Email</th>
+                            <th>Rol</th>
+                            <th>Estado</th>
+                            <th>Fecha Creación</th>
+                            <th>Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody></tbody>
+                </table>
+            </section>
+        </main>
+    </div>
+
+    <!-- MODAL PAGO -->
+    <div id="modalPago" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2>Procesar Pago</h2>
+            <div class="pago-info">
+                <p>Total a Pagar: Q<span id="totalPagar">0.00</span></p>
+                <label>Monto Recibido:</label>
+                <input type="number" id="montoRecibido" step="0.01" autofocus>
+                <p class="cambio">Cambio: Q<span id="cambioVenta">0.00</span></p>
+            </div>
+            <button id="btnConfirmarPago" class="btn btn-success btn-large">Confirmar Venta</button>
+        </div>
+    </div>
+
+    <!-- MODAL NUEVO USUARIO -->
+    <div id="modalUsuario" class="modal">
+        <div class="modal-content">
+            <span class="close-usuario">&times;</span>
+            <h2>Nuevo Usuario</h2>
+            <form id="formUsuario">
+                <label>Nombre:</label>
+                <input type="text" id="nombreNuevoUsuario" required>
+                
+                <label>Email:</label>
+                <input type="email" id="emailNuevoUsuario" required>
+                
+                <label>Contraseña:</label>
+                <input type="password" id="passwordNuevoUsuario" required>
+                
+                <label>Rol:</label>
+                <select id="rolNuevoUsuario">
+                    <option value="cajero">Cajero</option>
+                    <option value="admin">Administrador</option>
+                </select>
+                
+                <button type="submit" class="btn btn-primary btn-large">Crear Usuario</button>
+            </form>
+        </div>
+    </div>
+
+    <script src="js/app.js"></script>
+</body>
+</html>
